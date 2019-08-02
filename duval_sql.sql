@@ -1,8 +1,13 @@
+-- Exported from QuickDBD: https://www.quickdatabasediagrams.com/
+-- Link to schema: https://app.quickdatabasediagrams.com/#/d/i6siTq
+-- NOTE! If you have used non-SQL datatypes in your design, you will have to change these here.
+
+
 CREATE TABLE "DEPARTMENTS" (
     "dept_no" VARCHAR(10)   NOT NULL,
     "dept_name" VARCHAR(30)   NOT NULL,
     CONSTRAINT "pk_DEPARTMENTS" PRIMARY KEY (
-        "dept_no"
+        "dept_name"
      )
 );
 
@@ -12,7 +17,7 @@ CREATE TABLE "DEPT_EMP" (
     "from_date" DATE   NOT NULL,
     "to_date" DATE   NOT NULL,
     CONSTRAINT "pk_DEPT_EMP" PRIMARY KEY (
-        "emp_no"
+        "dept_no"
      )
 );
 
@@ -44,7 +49,7 @@ CREATE TABLE "SALARIES" (
     "from_date" DATE   NOT NULL,
     "to_date" DATE   NOT NULL,
     CONSTRAINT "pk_SALARIES" PRIMARY KEY (
-        "emp_no"
+        "to_date"
      )
 );
 
@@ -54,6 +59,22 @@ CREATE TABLE "TITLES" (
     "from_date" DATE   NOT NULL,
     "to_date" DATE   NOT NULL,
     CONSTRAINT "pk_TITLES" PRIMARY KEY (
-        "emp_no"
+        "from_date"
      )
 );
+
+ALTER TABLE "DEPARTMENTS" ADD CONSTRAINT "fk_DEPARTMENTS_dept_no" FOREIGN KEY("dept_no")
+REFERENCES "DEPT_EMP" ("dept_no");
+
+ALTER TABLE "DEPT_EMP" ADD CONSTRAINT "fk_DEPT_EMP_emp_no" FOREIGN KEY("emp_no")
+REFERENCES "DEPT_MANAGER" ("emp_no");
+
+ALTER TABLE "DEPT_MANAGER" ADD CONSTRAINT "fk_DEPT_MANAGER_to_date" FOREIGN KEY("to_date")
+REFERENCES "SALARIES" ("to_date");
+
+ALTER TABLE "SALARIES" ADD CONSTRAINT "fk_SALARIES_from_date" FOREIGN KEY("from_date")
+REFERENCES "TITLES" ("from_date");
+
+ALTER TABLE "TITLES" ADD CONSTRAINT "fk_TITLES_emp_no" FOREIGN KEY("emp_no")
+REFERENCES "EMPLOYEES" ("emp_no");
+

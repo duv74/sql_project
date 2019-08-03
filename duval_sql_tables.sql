@@ -159,41 +159,7 @@ WHERE
 -- TASK #8
 -- In descending order, list the frequency count of employee last names, i.e., how many employees share each last name.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+SELECT first_name, COUNT(first_name) AS "actor count"
+FROM actor
+GROUP BY first_name
+ORDER BY "actor count" DESC;
